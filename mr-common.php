@@ -37,7 +37,10 @@ function saveConfig($key, $value)
     $value = $db->quote($value);
     $stmt = $db->query("select value from config where key=$key");
     if ($stmt === false)
-        die($db->errorInfo());
+    {
+        $error = $db->errorInfo();
+        die($error[2]);
+    }
     elseif ($stmt->fetch(PDO::FETCH_NUM) === false)
     {
         $stmt->closeCursor();
@@ -57,7 +60,10 @@ function fetchConfig($key)
     $key = $db->quote($key);
     $stmt = $db->query("select value from config where key=$key");
     if ($stmt === false)
-        die($db->errorInfo());
+    {
+        $error = $db->errorInfo();
+        die($error[2]);
+    }
     $result = $stmt->fetch(PDO::FETCH_NUM);
     if ($result === false)
         return null;

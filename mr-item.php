@@ -28,7 +28,10 @@ if (isset($_GET['action']) &&
 
 $stmt = $db->query('select id from item order by time limit 1');
 if ($stmt === false)
-    die($db->errorInfo());
+{
+    $error = $db->errorInfo();
+    die($error[2]);
+}
 else
 {
     $result = $stmt->fetch(PDO::FETCH_NUM);
