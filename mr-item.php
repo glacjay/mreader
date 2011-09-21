@@ -1,6 +1,16 @@
 <?php
-require_once 'mr-header.php';
+require_once 'mr-common.php';
 require_once 'mr-oauth.php';
+
+if (!isset($_SESSION['access_token']))
+    logout();
+$url = "https://www.google.com/reader/api/0/user-info";
+list($http_code, $result) = requestOAuth($url);
+if ($http_code != 200)
+    logout();
+$json = json_decode($result, true);
+if ($json['userEmail'] != $email)
+    logout();
 
 if (isset($_GET['action']) &&
     ($_GET['action'] == 'read' || $_GET['action'] == 'star') &&
@@ -57,6 +67,22 @@ else
         $star_url = "mr-item.php?action=star&prev=$id&stream=$stream";
 ?>
 
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title><?php echo $app_name; ?></title>
+    <style type="text/css">
+        .title { background-color: #ddddff; margin: 0; }
+        .src { font-size: small; color: green; }
+    </style>
+</head>
+
+<body>
+    <div id="logo">
+        <font color="blue">G</font><font color="red">o</font><font color="orange">o</font><font color="blue">g</font><font color="green">l</font><font color="red">e</font>
+        Reader
+    </div>
     <div class="title">
         <?php echo $title; ?><br />
         <?php echo "by " . $author . " at " . $time; ?>
@@ -70,9 +96,13 @@ else
     <a href="<?php echo $origin; ?>">see origin</a></br />
     <a href="<?php echo $read_url; ?>">mark read then next</a><br />
     <a href="<?php echo $star_url; ?>">add star then next</a><br />
+    <br />
+    <a href="mr-item.php">Home</a> |
+    <a href="mr-logout.php">Logout</a>
+</body>
+</html>
 
 <?php
     }
 }
-require_once 'mr-footer.php';
 ?>

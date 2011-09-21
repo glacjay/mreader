@@ -20,7 +20,6 @@ session_start();
 function destroySession()
 {
     $_SESSION = array();
-    global $app_path;
     session_destroy();
 }
 
