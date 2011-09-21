@@ -26,48 +26,64 @@ if (isset($_GET['action']) &&
     $db->exec("delete from item where id=$prev");
 }
 
-$stmt = $db->query('select id from item order by time limit 1');
+$count = 0;
+$stmt = $db->query('select count(*) from item');
 if ($stmt === false)
-{
-    $error = $db->errorInfo();
-    die($error[2]);
-}
+    dieOnDb();
 else
 {
     $result = $stmt->fetch(PDO::FETCH_NUM);
-    if ($result === false)
-        echo "There is no more items.<br />\n";
+    $stmt->closeCursor();
+    $count = $result[0];
+}
+
+$stmt = $db->query('select time from item order by time desc limit 1');
+if ($stmt === false)
+    dieOnDb();
+else
+{
+    $result = $stmt->fetch(PDO::FETCH_NUM);
+    $stmt->closeCursor();
+    $newest = date('Y-m-d H:i:s', $result[0] / 1000);
+}
+
+$stmt = $db->query('select id from item order by time limit 1');
+if ($stmt === false)
+    dieOnDb();
+else
+{
+    $result = $stmt->fetch(PDO::FETCH_NUM);
+    $stmt->closeCursor();
+
+    $id = $result[0];
+    $items = getItem($id);
+    $item = $items['items'][0];
+
+    $src = $items['title'];
+    $time = date('Y-m-d H:i:s', $item['crawlTimeMsec'] / 1000);
+    $origin = $item['alternate'][0]['href'];
+
+    if (isset($item['title']))
+        $title = $item['title'];
     else
-    {
-        $id = $result[0];
-        $items = getItem($id);
-        $item = $items['items'][0];
+        $title = '(title unknown)';
 
-        $src = $items['title'];
-        $time = date('Y-m-d H:i:s', $item['crawlTimeMsec'] / 1000);
-        $origin = $item['alternate'][0]['href'];
+    if (isset($item['author']))
+        $author = $item['author'];
+    else
+        $author = '(someone)';
 
-        if (isset($item['title']))
-            $title = $item['title'];
-        else
-            $title = '(title unknown)';
+    if (isset($item['content']))
+        $content = $item['content']['content'];
+    elseif (isset($item['summary']))
+        $content = $item['summary']['content'];
+    else
+        $content = 'There is no content?!';
 
-        if (isset($item['author']))
-            $author = $item['author'];
-        else
-            $author = '(someone)';
-
-        if (isset($item['content']))
-            $content = $item['content']['content'];
-        elseif (isset($item['summary']))
-            $content = $item['summary']['content'];
-        else
-            $content = 'There is no content?!';
-
-        $id = urlencode($id);
-        $stream = urlencode(base64_encode($item['origin']['streamId']));
-        $read_url = "mr-item.php?action=read&prev=$id&stream=$stream";
-        $star_url = "mr-item.php?action=star&prev=$id&stream=$stream";
+    $id = urlencode($id);
+    $stream = urlencode(base64_encode($item['origin']['streamId']));
+    $read_url = "mr-item.php?action=read&prev=$id&stream=$stream";
+    $star_url = "mr-item.php?action=star&prev=$id&stream=$stream";
 ?>
 
 <!doctype html>
@@ -84,7 +100,7 @@ else
 <body>
     <div id="logo">
         <font color="blue">G</font><font color="red">o</font><font color="orange">o</font><font color="blue">g</font><font color="green">l</font><font color="red">e</font>
-        Reader
+        Reader (<?php echo $count; ?>) <?php echo $newest; ?>
     </div>
     <div class="title">
         <?php echo $title; ?><br />
@@ -106,6 +122,5 @@ else
 </html>
 
 <?php
-    }
 }
 ?>
