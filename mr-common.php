@@ -21,8 +21,6 @@ function destroySession()
 {
     $_SESSION = array();
     global $app_path;
-    if (session_id() != '' || isset($_COOKIE[session_name()]))
-        setcookie(session_name(), '', time()-2592000, $app_path);
     session_destroy();
 }
 
@@ -42,9 +40,15 @@ function saveConfig($key, $value)
     if ($stmt === false)
         die($db->errorInfo());
     elseif ($stmt->fetch(PDO::FETCH_NUM) === false)
+    {
+        $stmt->closeCursor();
         $db->exec("insert into config values ($key, $value)");
+    }
     else
+    {
+        $stmt->closeCursor();
         $db->exec("update config set value=$value where key=$key");
+    }
 }
 
 function fetchConfig($key)
