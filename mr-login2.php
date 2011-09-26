@@ -29,6 +29,7 @@ if ($http_code == 200)
     saveConfig('access_token', $access_token['oauth_token']);
     saveConfig('access_token_secret', $access_token['oauth_token_secret']);
     $_SESSION['access_token'] = $access_token['oauth_token'];
+    $_SESSION['access_token_secret'] = $access_token['oauth_token_secret'];
     header("Location: $app_url/mr-item.php");
 }
 else
