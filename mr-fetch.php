@@ -25,7 +25,7 @@ while (time() - $time < 300)
     {
         $url = "$scope/0/stream/contents/user/-/state/com.google/reading-list" .
             "?${c}xt=$xt&nt=$nt&ot=$ot&n=5&r=o&likes=false&comments=false";
-        list($http_code, $result) = requestOAuth($url);
+        list($http_code, $result) = requestOAuth($url, null, true);
         if ($http_code == 200)
         {
             $json = json_decode($result, true);

@@ -22,12 +22,21 @@ function parseTokenSecret($result)
     return $arr;
 }
 
-function requestOAuth($url, $post_data=null)
+function requestOAuth($url, $post_data=null, $fetching=false)
 {
     global $sig_method, $consumer_key, $consumer_secret, $scope, $consumer;
 
-    $access_token = $_SESSION['access_token'];
-    $access_token_secret = $_SESSION['access_token_secret'];
+    if ($fetching)
+    {
+        $access_token = fetchConfig('access_token');
+        $access_token_secret = fetchConfig('access_token_secret');
+    }
+    else
+    {
+        $access_token = $_SESSION['access_token'];
+        $access_token_secret = $_SESSION['access_token_secret'];
+    }
+
     $token = new OAuthConsumer($access_token, $access_token_secret);
     if ($post_data === null)
         $request = OAuthRequest::from_consumer_and_token(
