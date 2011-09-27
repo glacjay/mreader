@@ -94,7 +94,6 @@ else
     <style type="text/css">
         .title { background-color: #ddddff; margin: 0; }
         .src { font-size: small; color: green; }
-        .content { min-height: 24px; }
     </style>
 </head>
 
