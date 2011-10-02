@@ -2,7 +2,6 @@
 
 date_default_timezone_set('Asia/Shanghai');
 
-$app_name = "XXX's GReader";
 $app_path = '/reader';
 $app_domain = 'example.com';
 $app_url = "http://$app_domain$app_path";

@@ -90,7 +90,7 @@ else
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title><?php echo $app_name; ?></title>
+    <title><?php echo $title; ?></title>
     <style type="text/css">
         .title { background-color: #ddddff; margin: 0; }
         .src { font-size: small; color: green; }
