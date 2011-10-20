@@ -24,6 +24,7 @@ if (isset($_GET['action']) &&
     markRead($prev, $stream);
     $prev = $db->quote($prev);
     $db->exec("delete from item where id=$prev");
+    header('Location: mr-item.php');
 }
 
 $count = 0;
@@ -92,8 +93,9 @@ else
     <meta charset="utf-8" />
     <title><?php echo $title; ?></title>
     <style type="text/css">
-        .title { background-color: #ddddff; margin: 0; }
-        .src { font-size: small; color: green; }
+        body { font-size: 24px; }
+        .title { background-color: #ddddff; }
+        .src { color: green; }
     </style>
 </head>
 
