@@ -2,15 +2,7 @@
 require_once 'mr-common.php';
 require_once 'mr-oauth.php';
 
-$access_token = fetchConfig('access_token');
-if ($access_token === null)
-{
-    sendMail();
-    exit;
-}
-$access_token_secret = fetchConfig('access_token_secret');
 $last_fetch = intval(fetchConfig('last_fetch'));
-
 $time = time();
 while (time() - $time < 300)
 {
@@ -31,12 +23,15 @@ while (time() - $time < 300)
             $json = json_decode($result, true);
             if (count($json['items']) == 0)
                 break;
+
             foreach ($json['items'] as $item)
             {
                 if (!isset($item['title']))
                     $item['title'] = '(title unknown)';
+                if (ignoreItem($item))
+                    continue;
                 saveItem($item['id'], $item['title'], $item['origin']['title'],
-                    $item['crawlTimeMsec']);
+                        $item['crawlTimeMsec']);
             }
             if (isset($json['continuation']))
                 $c = 'c=' . $json['continuation'] . '&';
@@ -82,3 +77,5 @@ function saveItem($id, $title, $src, $time)
 }
 
 ?>
+
+<meta http-equiv="Refresh" content="0; url=mr-clean.php" />

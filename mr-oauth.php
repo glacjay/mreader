@@ -113,12 +113,12 @@ function markRead($id, $stream)
     markItem($id, $stream, 'read');
 }
 
-function getItem($id)
+function getItem($id, $fetching=false)
 {
     global $scope;
 
     $url = "$scope/0/stream/items/contents?i=$id";
-    list($http_code, $result) = requestOAuth($url);
+    list($http_code, $result) = requestOAuth($url, null, $fetching);
     if ($http_code == 200)
         return json_decode($result, true);
     else

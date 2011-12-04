@@ -101,8 +101,7 @@ else
 
 <body>
     <div id="logo">
-        <font color="blue">G</font><font color="red">o</font><font color="orange">o</font><font color="blue">g</font><font color="green">l</font><font color="red">e</font>
-        Reader (<?php echo $count; ?>) <?php echo $newest; ?>
+        Status: (<?php echo $count; ?>) <?php echo $newest; ?>
     </div>
     <div class="title">
         <?php echo $title; ?><br />

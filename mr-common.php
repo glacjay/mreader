@@ -71,4 +71,20 @@ function fetchConfig($key)
         return $result[0];
 }
 
+$ignoreList[] = 'http://www.verycd.com/';
+$ignoreList[] = 'http://www.daomubiji.com/';
+$ignoreList[] = 'http://www.bengou.com/';
+$ignoreList[] = 'http://www.youtube.com/';
+
+function ignoreItem($item)
+{
+    global $ignoreList;
+    $url = $item['origin']['htmlUrl'];
+    foreach ($ignoreList as $ignored)
+        if (strlen($ignored) <= strlen($url) &&
+                substr_compare($url, $ignored, 0, strlen($ignored)) == 0)
+            return true;
+    return false;
+}
+
 ?>
