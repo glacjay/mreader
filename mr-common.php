@@ -71,10 +71,10 @@ function fetchConfig($key)
         return $result[0];
 }
 
-$ignoreList[] = 'http://www.verycd.com/';
-$ignoreList[] = 'http://www.daomubiji.com/';
-$ignoreList[] = 'http://www.bengou.com/';
-$ignoreList[] = 'http://www.youtube.com/';
+$ignoreList[] = 'http://www.verycd.com';
+$ignoreList[] = 'http://www.daomubiji.com';
+$ignoreList[] = 'http://www.bengou.com';
+$ignoreList[] = 'http://www.youtube.com';
 
 function ignoreItem($item)
 {
