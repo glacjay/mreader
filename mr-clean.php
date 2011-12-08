@@ -2,17 +2,22 @@
 require_once 'mr-common.php';
 require_once 'mr-oauth.php';
 
-$stmt = $db->query('select id from item order by time limit 500');
+$stmt = $db->query('select id from item order by time');
 if ($stmt === false)
     dieOnDb();
 else
 {
-    while ($result = $stmt->fetch(PDO::FETCH_NUM))
+    $results = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    $stmt->closeCursor();
+
+    $count = 0;
+    foreach ($results as $id)
     {
-        $id = $result[0];
+        echo "$count";
+        $count++;
+
         $items = getItem($id, true);
         $item = $items['items'][0];
-
         $src = $items['title'];
         if (ignoreItem($item))
         {
@@ -20,9 +25,9 @@ else
             $id = $db->quote($id);
             $db->exec("delete from item where id=$id");
         }
-    }
 
-    $stmt->closeCursor();
+        echo "\r";
+    }
 }
 
 ?>

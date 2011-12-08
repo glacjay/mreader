@@ -78,4 +78,4 @@ function saveItem($id, $title, $src, $time)
 
 ?>
 
-<meta http-equiv="Refresh" content="0; url=mr-clean.php" />
+<meta http-equiv="Refresh" content="0; url=mr-item.php" />
