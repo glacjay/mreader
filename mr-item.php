@@ -93,7 +93,6 @@ else
     <meta charset="utf-8" />
     <title><?php echo $title; ?></title>
     <style type="text/css">
-        body { font-size: 24px; }
         .title { background-color: #ddddff; }
         .src { color: green; }
     </style>
