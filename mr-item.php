@@ -113,10 +113,9 @@ else
         <?php echo $content; ?>
     </div>
     <hr />
-    <a href="<?php echo $origin; ?>">see origin</a></br />
-    <a href="<?php echo $read_url; ?>">mark read then next</a><br />
-    <a href="<?php echo $star_url; ?>">add star then next</a><br />
-    <br />
+    <a href="<?php echo $origin; ?>">origin</a> |
+    <a href="<?php echo $read_url; ?>">next</a> |
+    <a href="<?php echo $star_url; ?>">star</a> |
     <a href="mr-item.php">Home</a> |
     <a href="mr-logout.php">Logout</a>
 </body>
