@@ -31,7 +31,7 @@ while (time() - $time < 300)
                 if (ignoreItem($item))
                     continue;
                 saveItem($item['id'], $item['title'], $item['origin']['title'],
-                        $item['crawlTimeMsec']);
+                        $item['crawlTimeMsec'], $item['origin']['streamId']);
             }
             if (isset($json['continuation']))
                 $c = 'c=' . $json['continuation'] . '&';
@@ -60,7 +60,7 @@ function sendMail()
     die("send mail...\n");
 }
 
-function saveItem($id, $title, $src, $time)
+function saveItem($id, $title, $src, $time, $stream)
 {
     global $db;
 
@@ -72,7 +72,9 @@ function saveItem($id, $title, $src, $time)
     {
         $title = $db->quote($title);
         $src = $db->quote($src);
-        $db->exec("insert into item (id, title, src, time) values ($id, $title, $src, $time)");
+        $stream = $db->quote($stream);
+        $db->exec("insert into item (id, title, src, time, stream) " .
+                  "values ($id, $title, $src, $time, $stream)");
     }
 }
 
