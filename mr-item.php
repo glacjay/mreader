@@ -38,18 +38,16 @@ if (isset($_GET['action']) &&
     isset($_GET['id']))
 {
     $prev = $_GET['id'];
-    $quoted_prev = $db->quote($prev);
 
-    $stmt = $db->query("select stream from item where id=$quoted_prev");
-    if ($stmt === false)
-        dieOnDb();
-    $result = $stmt->fetch(PDO::FETCH_NUM);
-    $stream = $result[0];
-    $stmt->closeCursor();
+    $items = getItem($prev);
+    $item = $items['items'][0];
+    $stream = $item['origin']['streamId'];
 
     if ($_GET['action'] == 'star')
         addStar($prev, $stream);
     markRead($prev, $stream);
+
+    $quoted_prev = $db->quote($prev);
     $db->exec("delete from item where id=$quoted_prev");
 
     redirectToOldestItem();
