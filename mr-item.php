@@ -121,7 +121,7 @@ $star_url = "mr-item.php?id=$id&action=star";
     </div>
     <hr />
     <a href="<?php echo $origin; ?>">origin</a> |
-    <a href="<?php echo $read_url; ?>">next</a> |
-    <a href="<?php echo $star_url; ?>">star</a>
+    <a href="<?php echo $star_url; ?>">star</a> |
+    <a href="<?php echo $read_url; ?>">next</a>
 </body>
 </html>
