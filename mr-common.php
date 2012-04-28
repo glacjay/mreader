@@ -14,7 +14,7 @@ catch (PDOException $ex)
 ini_set('session.save_handler', 'sqlite');
 ini_set('session.save_path', dirname(__FILE__) . '/session.db');
 ini_set('session.gc_maxlifetime', 60 * 60 * 24 * 7);
-ini_set('session.cookie_lifetime', 60 * 60 * 24 * 7);
+ini_set('session.cookie_lifetime', 60 * 60 * 24 * 365);
 session_start();
 
 function destroySession()
