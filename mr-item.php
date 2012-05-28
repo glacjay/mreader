@@ -112,6 +112,31 @@ $star_url = "mr-item.php?id=$id&action=star";
     <style type="text/css">
         .title { background-color: #ddddff; }
         .src { color: green; }
+        a.button {
+            display: inline-block;
+            text-decoration: none;
+            margin: 2px;
+            padding: 5px 20px;
+            border: solid 1px blue;
+            color: DarkBlue;
+            text-align: center;
+            background: -webkit-gradient(
+                linear,
+                left top,
+                left bottom,
+                color-stop(0, white),
+                color-stop(1, LightBlue)
+            );
+        }
+        a.button:active {
+            background: -webkit-gradient(
+                linear,
+                left top,
+                left bottom,
+                color-stop(0, LightBlue),
+                color-stop(1, white)
+            );
+        }
     </style>
 </head>
 
@@ -129,8 +154,8 @@ $star_url = "mr-item.php?id=$id&action=star";
         <?php echo $content; ?>
     </div>
     <hr />
-    <a href="<?php echo $origin; ?>">origin</a> |
-    <a href="<?php echo $star_url; ?>">star</a> |
-    <a href="<?php echo $read_url; ?>">next</a>
+    <a class="button" href="<?php echo $origin; ?>">origin</a>
+    <a class="button" href="<?php echo $star_url; ?>">star</a>
+    <a class="button" href="<?php echo $read_url; ?>">next</a>
 </body>
 </html>
