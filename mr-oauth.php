@@ -94,7 +94,7 @@ function markItem($id, $stream, $action)
 
     $post_data = array(
         'async' => 'true',
-        'a' => "user/-/state/com.google/$action",
+        'a' => $action,
         'i' => $id,
         's' => $stream,
         'T' => getActionToken());
@@ -103,14 +103,19 @@ function markItem($id, $stream, $action)
         oauthError($http_code, $result);
 }
 
-function addStar($id, $stream)
+function markStar($id, $stream)
 {
-    markItem($id, $stream, 'starred');
+    markItem($id, $stream, 'user/-/state/com.google/starred');
 }
 
 function markRead($id, $stream)
 {
-    markItem($id, $stream, 'read');
+    markItem($id, $stream, 'user/-/state/com.google/read');
+}
+
+function markLater($id, $stream)
+{
+    markItem($id, $stream, 'user/-/label/later');
 }
 
 function getItem($id, $fetching=false)

@@ -34,8 +34,7 @@ if (! isset($_GET['id']))
 $id = $_GET['id'];
 
 if (isset($_GET['action']) &&
-    ($_GET['action'] == 'read' || $_GET['action'] == 'star') &&
-    isset($_GET['id']))
+    ($_GET['action'] == 'next' || $_GET['action'] == 'star' || $_GET['action'] == 'later'))
 {
     $prev = $_GET['id'];
 
@@ -44,7 +43,9 @@ if (isset($_GET['action']) &&
     $stream = $item['origin']['streamId'];
 
     if ($_GET['action'] == 'star')
-        addStar($prev, $stream);
+        markStar($prev, $stream);
+    if ($_GET['action'] == 'later')
+        markLater($prev, $stream);
     markRead($prev, $stream);
 
     $quoted_prev = $db->quote($prev);
@@ -100,8 +101,9 @@ else
 
 $id = urlencode($id);
 $stream = urlencode(base64_encode($item['origin']['streamId']));
-$read_url = "mr-item.php?id=$id&action=read";
+$next_url = "mr-item.php?id=$id&action=next";
 $star_url = "mr-item.php?id=$id&action=star";
+$later_url = "mr-item.php?id=$id&action=later";
 ?>
 
 <!doctype html>
@@ -155,7 +157,8 @@ $star_url = "mr-item.php?id=$id&action=star";
     </div>
     <hr />
     <a class="button" href="<?php echo $origin; ?>">origin</a>
+    <a class="button" href="<?php echo $later_url; ?>">later</a>
     <a class="button" href="<?php echo $star_url; ?>">star</a>
-    <a class="button" href="<?php echo $read_url; ?>">next</a>
+    <a class="button" href="<?php echo $next_url; ?>">next</a>
 </body>
 </html>
