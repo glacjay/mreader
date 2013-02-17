@@ -104,6 +104,13 @@ $stream = urlencode(base64_encode($item['origin']['streamId']));
 $next_url = "mr-item.php?id=$id&action=next";
 $star_url = "mr-item.php?id=$id&action=star";
 $later_url = "mr-item.php?id=$id&action=later";
+
+if (ignoreItem($item))
+{
+    $quoted_prev = $db->quote($item['id']);
+    $db->exec("delete from item where id=$quoted_prev");
+    redirectToOldestItem();
+}
 ?>
 
 <!doctype html>
@@ -143,6 +150,11 @@ $later_url = "mr-item.php?id=$id&action=later";
 </head>
 
 <body>
+    <a class="button" href="<?php echo $origin; ?>">origin</a>
+    <a class="button" href="<?php echo $later_url; ?>">later</a>
+    <a class="button" href="<?php echo $star_url; ?>">star</a>
+    <a class="button" href="<?php echo $next_url; ?>">next</a>
+    <hr />
     <div id="logo">
         Status: (<?php echo $count; ?>) <?php echo $newest; ?>
     </div>

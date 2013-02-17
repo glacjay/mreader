@@ -11,8 +11,8 @@ catch (PDOException $ex)
     die("Open database failed: " . $ex->getMessage());
 }
 
-ini_set('session.save_handler', 'sqlite');
-ini_set('session.save_path', dirname(__FILE__) . '/session.db');
+#ini_set('session.save_handler', 'sqlite');
+#ini_set('session.save_path', dirname(__FILE__) . '/session.db');
 ini_set('session.gc_maxlifetime', 60 * 60 * 24 * 7);
 ini_set('session.cookie_lifetime', 60 * 60 * 24 * 365);
 session_start();
@@ -75,6 +75,8 @@ $ignoreList[] = 'http://www.verycd.com';
 $ignoreList[] = 'http://www.daomubiji.com';
 $ignoreList[] = 'http://www.bengou.com';
 $ignoreList[] = 'http://www.youtube.com';
+$ignoreList[] = 'http://www.hexieshe.com';
+$ignoreList[] = 'http://golangwiki.org';
 
 function ignoreItem($item)
 {
