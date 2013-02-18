@@ -26,7 +26,7 @@ function destroySession()
 function logout()
 {
     destroySession();
-    die("Please <a href='mr-login.php'>login</a> first.");
+    die("<meta http-equiv='Refresh' content='0; url=mr-login.php' />");
 }
 
 function dieOnDb()

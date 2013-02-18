@@ -1,2 +1,6 @@
 www:
     type: php
+db:
+    type: mysql
+redis:
+    type: redis
