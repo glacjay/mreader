@@ -1,0 +1,3 @@
+[submodule "vendor/phpredis"]
+	path = vendor/phpredis
+	url = https://github.com/nicolasff/phpredis.git

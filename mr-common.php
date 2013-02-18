@@ -1,10 +1,15 @@
 <?php
 require_once 'config';
 
-$db_file = dirname(__FILE__) . '/reader.db';
+#$db_file = dirname(__FILE__) . '/reader.db';
+$env = json_decode(file_get_contents("/home/dotcloud/environment.json"), true);
+$dsn = "mysql:host=".$env['DOTCLOUD_DB_MYSQL_HOST'].
+        ";port=".$env['DOTCLOUD_DB_MYSQL_PORT'].
+        ";dbname=mreader";
 try
 {
-    $db = new PDO("sqlite:$db_file");
+    #$db = new PDO("sqlite:$db_file");
+    $db = new PDO($dsn, 'glacjay', 'fuckgfw');
 }
 catch (PDOException $ex)
 {
@@ -41,7 +46,7 @@ function saveConfig($key, $value)
 
     $key = $db->quote($key);
     $value = $db->quote($value);
-    $stmt = $db->query("select value from config where key=$key");
+    $stmt = $db->query("select value from config where name=$key");
     if ($stmt === false)
         dieOnDb();
     elseif ($stmt->fetch(PDO::FETCH_NUM) === false)
@@ -52,7 +57,7 @@ function saveConfig($key, $value)
     else
     {
         $stmt->closeCursor();
-        $db->exec("update config set value=$value where key=$key");
+        $db->exec("update config set value=$value where name=$key");
     }
 }
 
@@ -61,7 +66,7 @@ function fetchConfig($key)
     global $db;
 
     $key = $db->quote($key);
-    $stmt = $db->query("select value from config where key=$key");
+    $stmt = $db->query("select value from config where name=$key");
     if ($stmt === false)
         dieOnDb();
     $result = $stmt->fetch(PDO::FETCH_NUM);
